@@ -1,0 +1,13 @@
+var R=require("../../chunks/ssr/[turbopack]_runtime.js")("server/app/percentage-calculator/page.js")
+R.c("server/chunks/ssr/[root-of-the-server]__0fxj0~_._.js")
+R.c("server/chunks/ssr/node_modules_next_dist_esm_build_templates_app-page_0rh~eko.js")
+R.c("server/chunks/ssr/[root-of-the-server]__06kg3ad._.js")
+R.c("server/chunks/ssr/[root-of-the-server]__0zgvpt1._.js")
+R.c("server/chunks/ssr/_0ulo-om._.js")
+R.c("server/chunks/ssr/_0bn.7yp._.js")
+R.c("server/chunks/ssr/node_modules_next_dist_client_components_0ee1czk._.js")
+R.c("server/chunks/ssr/node_modules_next_dist_client_components_builtin_unauthorized_0cjv-23.js")
+R.c("server/chunks/ssr/node_modules_next_dist_client_components_builtin_global-error_0lgvd_..js")
+R.c("server/chunks/ssr/_next-internal_server_app_percentage-calculator_page_actions_0_j2uum.js")
+R.m(53912)
+module.exports=R.m(53912).exports

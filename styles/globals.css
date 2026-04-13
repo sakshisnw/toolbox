@@ -1,0 +1,173 @@
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+
+  --bg: #f8f7f4;
+  --bg-card: #ffffff;
+  --bg-subtle: #f0ede8;
+  --border: #e4e0d9;
+  --text: #1a1714;
+  --text-muted: #6b6560;
+  --accent: #f97316;
+  --accent-light: #fff3ec;
+  --accent-dark: #ea6c0a;
+  --result-bg: #fff8f5;
+}
+
+.dark {
+  --bg: #111010;
+  --bg-card: #1a1918;
+  --bg-subtle: #232220;
+  --border: #2e2c2a;
+  --text: #f0ede8;
+  --text-muted: #8a8480;
+  --accent: #f97316;
+  --accent-light: #2a1a0e;
+  --accent-dark: #fb923c;
+  --result-bg: #1f1612;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  transition: background-color 0.2s, color 0.2s;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-subtle); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* Input base */
+.input-base {
+  @apply w-full px-4 py-3 rounded-xl border text-sm font-mono transition-all duration-200 outline-none;
+  background: var(--bg-subtle);
+  border-color: var(--border);
+  color: var(--text);
+  font-family: var(--font-mono);
+}
+
+.input-base:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 15%, transparent);
+}
+
+.input-base::placeholder {
+  color: var(--text-muted);
+}
+
+/* Card */
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 1.25rem;
+}
+
+/* Result box */
+.result-box {
+  background: var(--result-bg);
+  border: 1.5px solid color-mix(in srgb, var(--accent) 25%, transparent);
+  border-radius: 1rem;
+}
+
+/* Label */
+.label {
+  @apply text-xs font-medium mb-1.5 block tracking-wide uppercase;
+  color: var(--text-muted);
+  font-family: var(--font-display);
+}
+
+/* Stat display */
+.stat-value {
+  font-family: var(--font-display);
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+  font-family: var(--font-body);
+}
+
+/* Range input */
+input[type="range"] {
+  accent-color: var(--accent);
+  cursor: pointer;
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, var(--accent), #f59e0b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Tool grid card hover */
+.tool-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.tool-card:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+  box-shadow: 0 8px 32px color-mix(in srgb, var(--accent) 10%, transparent);
+}
+
+/* Animate stagger */
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.stagger > * {
+  animation: slideUp 0.4s ease forwards;
+  opacity: 0;
+}
+
+.stagger > *:nth-child(1) { animation-delay: 0.05s; }
+.stagger > *:nth-child(2) { animation-delay: 0.1s; }
+.stagger > *:nth-child(3) { animation-delay: 0.15s; }
+.stagger > *:nth-child(4) { animation-delay: 0.2s; }
+.stagger > *:nth-child(5) { animation-delay: 0.25s; }
+.stagger > *:nth-child(6) { animation-delay: 0.3s; }
+.stagger > *:nth-child(7) { animation-delay: 0.35s; }
+.stagger > *:nth-child(8) { animation-delay: 0.4s; }
+.stagger > *:nth-child(9) { animation-delay: 0.45s; }
+
+/* Badge */
+.badge {
+  @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium;
+  background: var(--accent-light);
+  color: var(--accent-dark);
+  font-family: var(--font-display);
+}
+
+/* Select */
+select.input-base {
+  cursor: pointer;
+}

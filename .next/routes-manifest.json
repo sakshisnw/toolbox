@@ -1,0 +1,117 @@
+{
+  "version": 3,
+  "pages404": true,
+  "appType": "app",
+  "caseSensitive": false,
+  "basePath": "",
+  "redirects": [
+    {
+      "source": "/:path+/",
+      "destination": "/:path+",
+      "internal": true,
+      "priority": true,
+      "statusCode": 308,
+      "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$"
+    }
+  ],
+  "headers": [],
+  "onMatchHeaders": [],
+  "rewrites": {
+    "beforeFiles": [],
+    "afterFiles": [],
+    "fallback": []
+  },
+  "dynamicRoutes": [],
+  "staticRoutes": [
+    {
+      "page": "/",
+      "regex": "^/(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/(?:/)?$"
+    },
+    {
+      "page": "/_global-error",
+      "regex": "^/_global\\-error(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_global\\-error(?:/)?$"
+    },
+    {
+      "page": "/_not-found",
+      "regex": "^/_not\\-found(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_not\\-found(?:/)?$"
+    },
+    {
+      "page": "/age-calculator",
+      "regex": "^/age\\-calculator(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/age\\-calculator(?:/)?$"
+    },
+    {
+      "page": "/bmi-calculator",
+      "regex": "^/bmi\\-calculator(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/bmi\\-calculator(?:/)?$"
+    },
+    {
+      "page": "/compound-interest",
+      "regex": "^/compound\\-interest(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/compound\\-interest(?:/)?$"
+    },
+    {
+      "page": "/compress-image",
+      "regex": "^/compress\\-image(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/compress\\-image(?:/)?$"
+    },
+    {
+      "page": "/convert-image",
+      "regex": "^/convert\\-image(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/convert\\-image(?:/)?$"
+    },
+    {
+      "page": "/emi-calculator",
+      "regex": "^/emi\\-calculator(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/emi\\-calculator(?:/)?$"
+    },
+    {
+      "page": "/percentage-calculator",
+      "regex": "^/percentage\\-calculator(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/percentage\\-calculator(?:/)?$"
+    },
+    {
+      "page": "/remove-bg",
+      "regex": "^/remove\\-bg(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/remove\\-bg(?:/)?$"
+    },
+    {
+      "page": "/resize-image",
+      "regex": "^/resize\\-image(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/resize\\-image(?:/)?$"
+    }
+  ],
+  "dataRoutes": [],
+  "rsc": {
+    "header": "rsc",
+    "varyHeader": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+    "prefetchHeader": "next-router-prefetch",
+    "didPostponeHeader": "x-nextjs-postponed",
+    "contentTypeHeader": "text/x-component",
+    "suffix": ".rsc",
+    "prefetchSegmentHeader": "next-router-segment-prefetch",
+    "prefetchSegmentSuffix": ".segment.rsc",
+    "prefetchSegmentDirSuffix": ".segments",
+    "clientParamParsing": false,
+    "dynamicRSCPrerender": false
+  },
+  "rewriteHeaders": {
+    "pathHeader": "x-nextjs-rewritten-path",
+    "queryHeader": "x-nextjs-rewritten-query"
+  }
+}

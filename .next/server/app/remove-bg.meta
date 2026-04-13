@@ -1,0 +1,15 @@
+{
+  "headers": {
+    "x-nextjs-stale-time": "300",
+    "x-nextjs-prerender": "1",
+    "x-next-cache-tags": "_N_T_/layout,_N_T_/remove-bg/layout,_N_T_/remove-bg/page,_N_T_/remove-bg"
+  },
+  "segmentPaths": [
+    "/_tree",
+    "/_full",
+    "/remove-bg/__PAGE__",
+    "/remove-bg",
+    "/_index",
+    "/_head"
+  ]
+}
