@@ -104,6 +104,17 @@ export const tools: Tool[] = [
     metaTitle: "Image Converter – Convert PNG, JPG, WebP Online Free",
     metaDescription: "Convert images between PNG, JPEG, JPG, and WebP formats online for free. Fast client-side image conversion. No uploads needed.",
   },
+  {
+    slug: "remove-bg",
+    name: "Background Remover",
+    shortName: "Remove BG",
+    description: "Remove image backgrounds instantly using client-side edge detection. Works entirely in your browser.",
+    icon: "🖼️",
+    category: "image",
+    color: "#0ea5e9",
+    metaTitle: "Remove Image Background — Free Background Remover",
+    metaDescription: "Remove image backgrounds instantly using client-side edge detection. No uploads, no accounts — works entirely in your browser.",
+  },
 
   // Text & Developer Tools
   {
@@ -256,41 +267,7 @@ export const tools: Tool[] = [
 ];
 
 export const calculatorTools = tools.filter((t) => t.category === "calculator");
-export const imageTools = [
-  {
-    slug: "compress-image",
-    name: "Image Compressor",
-    shortName: "Compress",
-    description: "Compress images in your browser with zero uploads — privacy-first, client-side only.",
-    icon: "🗜️",
-    category: "image",
-    color: "#f59e0b",
-    metaTitle: "Image Compressor – Reduce Image Size Online Free",
-    metaDescription: "Compress JPEG, PNG, and WebP images online for free. Reduce file size without losing quality. 100% client-side, no uploads.",
-  },
-  {
-    slug: "resize-image",
-    name: "Resize Image",
-    shortName: "Resize",
-    description: "Resize images to exact dimensions or by percentage, all in your browser.",
-    icon: "↔️",
-    category: "image",
-    color: "#06b6d4",
-    metaTitle: "Image Resizer – Resize Images Online Free",
-    metaDescription: "Resize images to exact dimensions or by percentage online. Free image resizer tool that works in your browser. No uploads required.",
-  },
-  {
-    slug: "convert-image",
-    name: "Image Converter",
-    shortName: "Convert",
-    description: "Convert images between PNG, JPEG, and WebP formats instantly in your browser.",
-    icon: "🔄",
-    category: "image",
-    color: "#84cc16",
-    metaTitle: "Image Converter – Convert PNG, JPG, WebP Online Free",
-    metaDescription: "Convert images between PNG, JPEG, JPG, and WebP formats online for free. Fast client-side image conversion. No uploads needed.",
-  },
-];
+export const imageTools = tools.filter((t) => t.category === "image");
 export const textTools = tools.filter((t) => t.category === "text");
 export const pdfTools = tools.filter((t) => t.category === "pdf");
 export const generatorTools = tools.filter((t) => t.category === "generator");
