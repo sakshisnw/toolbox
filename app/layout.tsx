@@ -2,28 +2,33 @@ import type { Metadata } from "next";
 import "@/styles/globals.css";
 import { Navbar } from "@/components/Navbar";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { Footer } from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: {
-    default: "Toolbox — Free Online Tools",
+    default: "Free Online Tools for Images, PDFs, Calculations & Developers",
     template: "%s | Toolbox",
   },
   description:
-    "Free online tools: BMI calculator, age calculator, EMI calculator, image compressor, resize image, and more.",
+    "Free online tools for images, PDFs, calculations, and developers. Fast, secure, no signup required. 20+ privacy-focused utilities.",
   keywords: [
     "online tools",
+    "free tools",
+    "image compressor",
+    "pdf compressor",
+    "json formatter",
+    "password generator",
     "bmi calculator",
     "age calculator",
     "emi calculator",
-    "image compressor",
-    "resize image",
-    "percentage calculator",
-    "compound interest",
+    "word counter",
+    "qr code generator",
+    "uuid generator",
   ],
   openGraph: {
     type: "website",
-    title: "Toolbox — Free Online Tools",
-    description: "Fast, free, privacy-first online tools.",
+    title: "Free Online Tools for Images, PDFs, Calculations & Developers",
+    description: "Fast, secure, no signup required. 20+ free online tools.",
   },
 };
 
@@ -38,9 +43,7 @@ export default function RootLayout({
         <ThemeProvider>
           <Navbar />
           <main className="min-h-screen">{children}</main>
-          <footer className="py-10 text-center text-sm" style={{ color: "var(--text-muted)", borderTop: "1px solid var(--border)" }}>
-            <p>Toolbox &copy; {new Date().getFullYear()} — Free tools, no tracking, no signup.</p>
-          </footer>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>
