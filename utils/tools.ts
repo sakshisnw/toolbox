@@ -152,7 +152,7 @@ export const tools: Tool[] = [
   },
   {
     slug: "base64-encoder",
-    name: "Base64 Encode / Decode",
+    name: "Encoder / Decoder",
     shortName: "Base64",
     description: "Encode and decode text to and from Base64 format instantly.",
     icon: "🔐",

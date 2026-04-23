@@ -3,82 +3,155 @@ import { useState } from "react";
 import { calcAge } from "@/utils/calculators";
 
 export function AgeClient() {
-  const [dob, setDob] = useState("");
-  const [refDate, setRefDate] = useState("");
-
   const today = new Date().toISOString().split("T")[0];
-  const result =
-    dob
-      ? calcAge(new Date(dob), refDate ? new Date(refDate) : new Date())
-      : null;
+  const [dob, setDob] = useState("");
+  const [refDate, setRefDate] = useState(today); // ← today pre-selected
 
-  const stats = result
-    ? [
-        { label: "Years", value: result.years },
-        { label: "Months", value: result.months },
-        { label: "Days", value: result.days },
-      ]
-    : [];
+  const result = dob
+    ? calcAge(new Date(dob), refDate ? new Date(refDate) : new Date())
+    : null;
+
+  const inputStyle: React.CSSProperties = {
+    width: "100%",
+    padding: "10px 12px",
+    fontSize: 14,
+    border: "0.5px solid var(--border-secondary)",
+    borderRadius: 8,
+    background: "var(--bg-card)",
+    color: "var(--text)",
+    outline: "none",
+    boxSizing: "border-box",
+  };
+
+  const labelStyle: React.CSSProperties = {
+    fontSize: 11,
+    fontWeight: 500,
+    color: "var(--text-muted)",
+    marginBottom: 6,
+    display: "block",
+    textTransform: "uppercase",
+    letterSpacing: "0.05em",
+  };
 
   return (
-    <div className="space-y-5">
-      <div className="card p-5 space-y-4">
-        <div>
-          <label className="label">Date of Birth</label>
+    <div style={{ maxWidth: 420, margin: "0 auto", display: "flex", flexDirection: "column", gap: 12 }}>
+
+      {/* Input card */}
+      <div style={{
+        background: "var(--bg-card)",
+        border: "0.5px solid var(--border)",
+        borderRadius: 14,
+        overflow: "hidden",
+      }}>
+        <div style={{ padding: "16px 20px", borderBottom: "0.5px solid var(--border)" }}>
+          <label style={labelStyle}>Date of birth</label>
           <input
             type="date"
-            className="input-base"
+            style={inputStyle}
             value={dob}
             max={today}
             onChange={(e) => setDob(e.target.value)}
           />
         </div>
-        <div>
-          <label className="label">Calculate age on (optional)</label>
+        <div style={{ padding: "16px 20px", background: "var(--bg-subtle)" }}>
+          <label style={labelStyle}>Calculate age on</label>
           <input
             type="date"
-            className="input-base"
+            style={inputStyle}
             value={refDate}
             max={today}
-            placeholder="Leave blank for today"
             onChange={(e) => setRefDate(e.target.value)}
           />
-          <p className="text-xs mt-1" style={{ color: "var(--text-muted)" }}>
-            Leave blank to calculate up to today
-          </p>
         </div>
       </div>
 
+      {/* Empty state */}
+      {!dob && (
+        <div style={{
+          textAlign: "center",
+          padding: "36px 0",
+          fontSize: 13,
+          color: "var(--text-muted)",
+          border: "0.5px dashed var(--border)",
+          borderRadius: 12,
+        }}>
+          Enter your date of birth to see your age
+        </div>
+      )}
+
+      {/* Results */}
       {result && (
-        <div className="result-box p-6 animate-slide-up space-y-5">
-          {/* Primary display */}
-          <div className="grid grid-cols-3 gap-4 text-center">
-            {stats.map((s) => (
-              <div key={s.label} className="p-4 rounded-xl" style={{ background: "var(--bg-subtle)" }}>
-                <div className="stat-value">{s.value}</div>
-                <div className="stat-label">{s.label}</div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+
+          {/* Y / M / D */}
+          <div style={{ display: "flex", gap: 8 }}>
+            {[
+              { label: "Years", value: result.years },
+              { label: "Months", value: result.months },
+              { label: "Days", value: result.days },
+            ].map((s, i) => (
+              <div
+                key={s.label}
+                style={{
+                  flex: 1,
+                  background: i === 0 ? "#378ADD" : "var(--bg-subtle)",
+                  borderRadius: 10,
+                  padding: "16px 10px",
+                  textAlign: "center",
+                  border: i === 0 ? "none" : "0.5px solid var(--border)",
+                }}
+              >
+                <div style={{
+                  fontSize: 30,
+                  fontWeight: 500,
+                  lineHeight: 1,
+                  color: i === 0 ? "#fff" : "var(--text)",
+                }}>
+                  {s.value}
+                </div>
+                <div style={{
+                  fontSize: 11,
+                  marginTop: 5,
+                  fontWeight: 500,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.06em",
+                  color: i === 0 ? "rgba(255,255,255,0.75)" : "var(--text-muted)",
+                }}>
+                  {s.label}
+                </div>
               </div>
             ))}
           </div>
 
-          <div className="h-px" style={{ background: "var(--border)" }} />
-
           {/* Extended stats */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+          <div style={{
+            background: "var(--bg-card)",
+            border: "0.5px solid var(--border)",
+            borderRadius: 12,
+            padding: "2px 16px",
+          }}>
             {[
-              { label: "Total Days", value: result.totalDays.toLocaleString("en-IN") },
-              { label: "Total Hours", value: result.totalHours.toLocaleString("en-IN") },
-              { label: "Total Minutes", value: result.totalMinutes.toLocaleString("en-IN") },
-            ].map((s) => (
+              { label: "Total days", value: result.totalDays.toLocaleString("en-IN") },
+              { label: "Total hours", value: result.totalHours.toLocaleString("en-IN") },
+              { label: "Total minutes", value: result.totalMinutes.toLocaleString("en-IN") },
+            ].map((s, i, arr) => (
               <div
                 key={s.label}
-                className="flex flex-col gap-0.5 px-4 py-3 rounded-xl"
-                style={{ background: "var(--bg-subtle)" }}
+                style={{
+                  display: "flex",
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                  padding: "11px 0",
+                  borderBottom: i < arr.length - 1 ? "0.5px solid var(--border)" : "none",
+                }}
               >
-                <span className="text-xs" style={{ color: "var(--text-muted)", fontFamily: "var(--font-display)" }}>
-                  {s.label}
-                </span>
-                <span className="font-bold text-lg" style={{ fontFamily: "var(--font-mono)", color: "var(--accent)" }}>
+                <span style={{ fontSize: 13, color: "var(--text-muted)" }}>{s.label}</span>
+                <span style={{
+                  fontSize: 13,
+                  fontWeight: 500,
+                  color: "var(--text)",
+                  fontFamily: "var(--font-mono)",
+                }}>
                   {s.value}
                 </span>
               </div>
@@ -86,34 +159,40 @@ export function AgeClient() {
           </div>
 
           {/* Next birthday */}
-          <div
-            className="flex items-center justify-between px-4 py-3 rounded-xl"
-            style={{ background: "color-mix(in srgb, #8b5cf6 12%, transparent)", border: "1px solid color-mix(in srgb, #8b5cf6 25%, transparent)" }}
-          >
+          <div style={{
+            background: "#E6F1FB",
+            border: "0.5px solid #B5D4F4",
+            borderRadius: 12,
+            padding: "14px 16px",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+          }}>
             <div>
-              <div className="text-xs font-medium mb-0.5" style={{ color: "#8b5cf6", fontFamily: "var(--font-display)" }}>
-                🎂 Next Birthday
+              <div style={{
+                fontSize: 11,
+                fontWeight: 500,
+                color: "#185FA5",
+                marginBottom: 4,
+                textTransform: "uppercase",
+                letterSpacing: "0.05em",
+              }}>
+                Next birthday
               </div>
-              <div className="text-sm font-medium" style={{ color: "var(--text)" }}>
+              <div style={{ fontSize: 14, fontWeight: 500, color: "#0C447C" }}>
                 {result.nextBirthday.date}
               </div>
             </div>
-            <div className="text-right">
-              <div className="text-2xl font-bold" style={{ color: "#8b5cf6", fontFamily: "var(--font-display)" }}>
-                {result.nextBirthday.days}
+            <div style={{ textAlign: "right" }}>
+              <div style={{ fontSize: 24, fontWeight: 500, color: "#185FA5" }}>
+                {result.nextBirthday.days === 0 ? "Today!" : result.nextBirthday.days}
               </div>
-              <div className="text-xs" style={{ color: "var(--text-muted)" }}>days away</div>
+              {result.nextBirthday.days !== 0 && (
+                <div style={{ fontSize: 11, color: "#378ADD" }}>days away</div>
+              )}
             </div>
           </div>
-        </div>
-      )}
 
-      {!dob && (
-        <div
-          className="text-center py-10 rounded-2xl border-2 border-dashed text-sm"
-          style={{ borderColor: "var(--border)", color: "var(--text-muted)" }}
-        >
-          Enter your date of birth to see your age
         </div>
       )}
     </div>

@@ -1,14 +1,30 @@
 "use client";
 import { useState } from "react";
-import { calcPercentOf, calcXPercentOfY, calcPercentChange } from "@/utils/calculators";
 
 type Mode = "whatPercent" | "percentOf" | "change";
 
 const modes: { key: Mode; label: string; desc: string }[] = [
-  { key: "whatPercent", label: "X is what % of Y?", desc: "Find what percentage one number is of another" },
-  { key: "percentOf", label: "X% of Y = ?", desc: "Calculate a percentage of a number" },
+  { key: "whatPercent", label: "X is ?% of Y", desc: "Find what percentage one number is of another" },
+  { key: "percentOf", label: "X% of Y", desc: "Calculate a percentage of a number" },
   { key: "change", label: "% Change", desc: "Calculate percentage increase or decrease" },
 ];
+
+const inputLabels: Record<Mode, [string, string]> = {
+  whatPercent: ["Part (X)", "Total (Y)"],
+  percentOf: ["Percent (X%)", "Value (Y)"],
+  change: ["From value", "To value"],
+};
+
+const refs: [string, string][] = [
+  ["10% of 200", "20"],
+  ["25% of 80", "20"],
+  ["15 is ?% of 60", "25%"],
+  ["50 → 75", "+50%"],
+];
+
+function fmt(n: number) {
+  return parseFloat(n.toFixed(4)).toLocaleString(undefined, { maximumFractionDigits: 4 });
+}
 
 export function PercentageClient() {
   const [mode, setMode] = useState<Mode>("whatPercent");
@@ -18,44 +34,49 @@ export function PercentageClient() {
   const av = parseFloat(a);
   const bv = parseFloat(b);
 
-  let result: number | null = null;
-  let resultLabel = "";
+  let display: string | null = null;
+  let sub = "";
+  let changeValue: number | null = null;
 
   if (!isNaN(av) && !isNaN(bv)) {
-    if (mode === "whatPercent") {
-      result = calcPercentOf(av, bv);
-      resultLabel = `${a} is ${result}% of ${b}`;
+    if (mode === "whatPercent" && bv !== 0) {
+      const val = (av / bv) * 100;
+      display = fmt(val) + "%";
+      sub = `${av} is ${fmt(val)}% of ${bv}`;
     } else if (mode === "percentOf") {
-      result = calcXPercentOfY(av, bv);
-      resultLabel = `${a}% of ${b} = ${result}`;
-    } else {
-      result = calcPercentChange(av, bv);
-      resultLabel = result === null
-        ? "Cannot divide by zero"
-        : `${result > 0 ? "+" : ""}${result}% change from ${a} to ${b}`;
+      const val = (av / 100) * bv;
+      display = fmt(val);
+      sub = `${av}% of ${bv} = ${fmt(val)}`;
+    } else if (mode === "change" && av !== 0) {
+      const val = ((bv - av) / Math.abs(av)) * 100;
+      changeValue = val;
+      display = (val > 0 ? "+" : "") + fmt(val) + "%";
+      sub = `${av} → ${bv} is ${display} change`;
     }
   }
 
-  const labels: Record<Mode, [string, string]> = {
-    whatPercent: ["Part (X)", "Total (Y)"],
-    percentOf: ["Percent (X%)", "Value (Y)"],
-    change: ["From value", "To value"],
+  const handleModeChange = (m: Mode) => {
+    setMode(m);
+    setA("");
+    setB("");
   };
 
   return (
-    <div className="space-y-5">
-      {/* Mode selector */}
-      <div className="card p-2 flex flex-col sm:flex-row gap-2">
+    <div className="space-y-4">
+
+      {/* Segmented mode selector */}
+      <div className="card p-1.5 flex gap-1">
         {modes.map((m) => (
           <button
             key={m.key}
-            onClick={() => { setMode(m.key); setA(""); setB(""); }}
-            className="flex-1 text-left px-4 py-3 rounded-xl text-sm transition-all"
+            onClick={() => handleModeChange(m.key)}
+            className="flex-1 px-3 py-2.5 rounded-lg text-sm transition-all"
             style={{
               background: mode === m.key ? "var(--accent)" : "transparent",
               color: mode === m.key ? "white" : "var(--text-muted)",
               fontFamily: "var(--font-display)",
               fontWeight: mode === m.key ? 600 : 400,
+              lineHeight: 1.3,
             }}
           >
             {m.label}
@@ -63,72 +84,75 @@ export function PercentageClient() {
         ))}
       </div>
 
-      <div className="card p-5 space-y-4">
+      {/* Inputs */}
+      <div className="card p-4 space-y-4">
         <p className="text-sm" style={{ color: "var(--text-muted)" }}>
           {modes.find((m) => m.key === mode)?.desc}
         </p>
-        <div className="grid grid-cols-2 gap-4">
-          <div>
-            <label className="label">{labels[mode][0]}</label>
-            <input
-              type="number"
-              className="input-base"
-              placeholder="0"
-              value={a}
-              onChange={(e) => setA(e.target.value)}
-            />
-          </div>
-          <div>
-            <label className="label">{labels[mode][1]}</label>
-            <input
-              type="number"
-              className="input-base"
-              placeholder="0"
-              value={b}
-              onChange={(e) => setB(e.target.value)}
-            />
-          </div>
+        <div className="grid grid-cols-2 gap-3">
+          {(["a", "b"] as const).map((field, i) => (
+            <div key={field}>
+              <label className="label">{inputLabels[mode][i]}</label>
+              <input
+                type="number"
+                inputMode="decimal"
+                className="input-base"
+                placeholder="0"
+                value={field === "a" ? a : b}
+                onChange={(e) =>
+                  field === "a" ? setA(e.target.value) : setB(e.target.value)
+                }
+              />
+            </div>
+          ))}
         </div>
       </div>
 
-      {result !== null && (
-        <div className="result-box p-6 animate-slide-up">
-          <div className="stat-value mb-1">
-            {mode === "change" && result > 0 ? "+" : ""}{result}
-            {mode !== "percentOf" ? "%" : ""}
-          </div>
-          <div className="stat-label text-sm">{resultLabel}</div>
-
-          {mode === "change" && result !== null && (
+      {/* Result */}
+      {display !== null && (
+        <div className="result-box p-5 animate-slide-up">
+          <div className="stat-value mb-1">{display}</div>
+          <div className="stat-label text-sm">{sub}</div>
+          {mode === "change" && changeValue !== null && (
             <div
-              className="mt-4 inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium"
+              className="mt-3 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium"
               style={{
-                background: result > 0 ? "color-mix(in srgb, #10b981 15%, transparent)" : "color-mix(in srgb, #ef4444 15%, transparent)",
-                color: result > 0 ? "#10b981" : "#ef4444",
+                background:
+                  changeValue > 0
+                    ? "color-mix(in srgb, #10b981 15%, transparent)"
+                    : "color-mix(in srgb, #ef4444 15%, transparent)",
+                color: changeValue > 0 ? "#10b981" : "#ef4444",
                 fontFamily: "var(--font-display)",
               }}
             >
-              {result > 0 ? "▲ Increase" : "▼ Decrease"}
+              {changeValue > 0 ? "▲ Increase" : "▼ Decrease"}
             </div>
           )}
         </div>
       )}
 
       {/* Quick reference */}
-      <div className="card p-5">
-        <h3 className="font-bold text-sm mb-3" style={{ fontFamily: "var(--font-display)" }}>
+      <div className="card p-4">
+        <h3
+          className="text-xs font-bold mb-3 uppercase tracking-wider"
+          style={{ color: "var(--text-muted)", fontFamily: "var(--font-display)" }}
+        >
           Quick Reference
         </h3>
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs" style={{ color: "var(--text-muted)" }}>
-          {[
-            ["10% of 200", "20"],
-            ["25% of 80", "20"],
-            ["15 is ?% of 60", "25%"],
-            ["50→75 change", "+50%"],
-          ].map(([q, a]) => (
-            <div key={q} className="px-3 py-2 rounded-lg" style={{ background: "var(--bg-subtle)" }}>
-              <div style={{ color: "var(--text-muted)" }}>{q}</div>
-              <div className="font-mono font-bold text-sm mt-0.5" style={{ color: "var(--accent)" }}>{a}</div>
+        <div className="grid grid-cols-2 gap-2">
+          {refs.map(([q, ans]) => (
+            <div
+              key={q}
+              className="px-3 py-2 rounded-lg"
+              style={{ background: "var(--bg-subtle)" }}
+            >
+              <div className="text-xs" style={{ color: "var(--text-muted)" }}>{q}</div>
+              <div
+                className="font-mono font-bold text-sm mt-0.5"
+                style={{ color: "var(--accent)" }}
+              >
+                {ans}
+              </div>
             </div>
           ))}
         </div>

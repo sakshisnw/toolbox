@@ -15,10 +15,10 @@
   --border: #e4e0d9;
   --text: #1a1714;
   --text-muted: #6b6560;
-  --accent: #f97316;
-  --accent-light: #fff3ec;
-  --accent-dark: #ea6c0a;
-  --result-bg: #fff8f5;
+  --accent: #378ADD;
+  --accent-light: #E6F1FB;
+  --accent-dark: #185FA5;
+  --result-bg: #EFF6FF;
 }
 
 .dark {
@@ -28,10 +28,10 @@
   --border: #2e2c2a;
   --text: #f0ede8;
   --text-muted: #8a8480;
-  --accent: #f97316;
-  --accent-light: #2a1a0e;
-  --accent-dark: #fb923c;
-  --result-bg: #1f1612;
+  --accent: #378ADD;
+  --accent-light: #0c2340;
+  --accent-dark: #85B7EB;
+  --result-bg: #0e1e2e;
 }
 
 * {
@@ -121,7 +121,7 @@ input[type="range"] {
 
 /* Gradient text */
 .gradient-text {
-  background: linear-gradient(135deg, var(--accent), #f59e0b);
+  background: linear-gradient(135deg, var(--accent), #60a5fa);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
