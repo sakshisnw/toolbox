@@ -6,6 +6,7 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  allowedDevOrigins: ['192.168.9.220'],
   // Redirects from old routes to new /tools/ routes for SEO
   async redirects() {
     return [
