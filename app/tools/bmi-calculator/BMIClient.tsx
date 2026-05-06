@@ -310,7 +310,7 @@ export function BMIClient() {
           className="w-full py-2.5 rounded-lg text-sm font-medium text-white transition-colors mt-1"
           style={{ background: "#378ADD", border: "none" }}
         >
-          Calculate BMI
+          Calculate Me
         </button>
       </div>
 
