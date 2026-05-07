@@ -50,25 +50,45 @@ export function AgeClient() {
 
   const hasValidDob = !!dobDate;
 
+  // Calendar icon SVG
+  const CalIcon = () => (
+    <svg width="14" height="14" viewBox="0 0 20 20" fill="none">
+      <rect x="3" y="4" width="14" height="13" rx="2" stroke="var(--accent)" strokeWidth="1.6"/>
+      <path d="M3 8h14" stroke="var(--accent)" strokeWidth="1.6"/>
+      <path d="M7 2v3M13 2v3" stroke="var(--accent)" strokeWidth="1.6" strokeLinecap="round"/>
+    </svg>
+  );
+
+  // Clock icon SVG
+  const ClockIcon = () => (
+    <svg width="14" height="14" viewBox="0 0 20 20" fill="none">
+      <circle cx="10" cy="10" r="7" stroke="var(--accent)" strokeWidth="1.6"/>
+      <path d="M10 6v4l2.5 2.5" stroke="var(--accent)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+    </svg>
+  );
+
   return (
-    <div style={s.container}>
+    <div style={{ display: "flex", flexDirection: "column", gap: 20, width: "100%", maxWidth: 560, margin: "0 auto", padding: "16px 0", fontFamily: "var(--font-body)" }}>
 
       {/* Date inputs */}
-      <div style={s.inputCard}>
-        <div style={s.row}>
-          <div style={s.field}>
-            <label style={s.label}>
-              <svg width="14" height="14" viewBox="0 0 20 20" fill="none">
-                <rect x="3" y="4" width="14" height="13" rx="2" stroke="#4f8ef7" strokeWidth="1.6"/>
-                <path d="M3 8h14" stroke="#4f8ef7" strokeWidth="1.6"/>
-                <path d="M7 2v3M13 2v3" stroke="#4f8ef7" strokeWidth="1.6" strokeLinecap="round"/>
-              </svg>
-              Date of Birth
+      <div style={{ background: "var(--bg-card)", borderRadius: 16, padding: "20px 24px", border: "1px solid var(--border)" }}>
+        <div style={{ display: "flex", gap: 16 }}>
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 8 }}>
+            <label style={{ fontSize: 13, color: "var(--text-muted)", fontWeight: 500, display: "flex", alignItems: "center", gap: 6 }}>
+              <CalIcon /> Date of Birth
             </label>
             <input
               style={{
-                ...s.input,
-                borderColor: isInvalidOrder ? "#f87171" : "#e5e7eb",
+                border: `1px solid ${isInvalidOrder ? "#f87171" : "var(--border)"}`,
+                borderRadius: 10,
+                padding: "10px 14px",
+                fontSize: 15,
+                color: "var(--text)",
+                outline: "none",
+                width: "100%",
+                boxSizing: "border-box",
+                background: "var(--bg-subtle)",
+                transition: "border-color 0.15s",
               }}
               value={dobInput}
               onChange={handleDob}
@@ -76,18 +96,22 @@ export function AgeClient() {
               maxLength={10}
             />
           </div>
-          <div style={s.field}>
-            <label style={s.label}>
-              <svg width="14" height="14" viewBox="0 0 20 20" fill="none">
-                <circle cx="10" cy="10" r="7" stroke="#4f8ef7" strokeWidth="1.6"/>
-                <path d="M10 6v4l2.5 2.5" stroke="#4f8ef7" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-              Calculate Age On
+          <div style={{ flex: 1, display: "flex", flexDirection: "column", gap: 8 }}>
+            <label style={{ fontSize: 13, color: "var(--text-muted)", fontWeight: 500, display: "flex", alignItems: "center", gap: 6 }}>
+              <ClockIcon /> Calculate Age On
             </label>
             <input
               style={{
-                ...s.input,
-                borderColor: isInvalidOrder ? "#f87171" : "#e5e7eb",
+                border: `1px solid ${isInvalidOrder ? "#f87171" : "var(--border)"}`,
+                borderRadius: 10,
+                padding: "10px 14px",
+                fontSize: 15,
+                color: "var(--text)",
+                outline: "none",
+                width: "100%",
+                boxSizing: "border-box",
+                background: "var(--bg-subtle)",
+                transition: "border-color 0.15s",
               }}
               value={onInput}
               onChange={handleOn}
@@ -97,38 +121,65 @@ export function AgeClient() {
           </div>
         </div>
         {isInvalidOrder && (
-          <p style={s.errorMsg}>
+          <p style={{ marginTop: 10, marginBottom: 0, fontSize: 12, color: "#ef4444", fontWeight: 500 }}>
             ⚠ &ldquo;Calculate Age On&rdquo; date must be on or after the date of birth.
           </p>
         )}
       </div>
 
-      {/* Age tiles */}
-      <div style={s.tiles}>
+      {/* Age tiles — YEARS: accent blue, MONTHS + DAYS: dark card */}
+      <div style={{ display: "flex", gap: 12 }}>
         {[
-          { label: "YEARS",  value: hasValidDob && result ? result.years  : "—", bg: "linear-gradient(135deg, #4f8ef7 0%, #3b6fd4 100%)" },
-          { label: "MONTHS", value: hasValidDob && result ? result.months : "—", bg: "linear-gradient(135deg, #6a5af9 0%, #5040d9 100%)" },
-          { label: "DAYS",   value: hasValidDob && result ? result.days   : "—", bg: "linear-gradient(135deg, #a855f7 0%, #7c3aed 100%)" },
+          { label: "YEARS",  value: hasValidDob && result ? result.years  : "—", accent: true  },
+          { label: "MONTHS", value: hasValidDob && result ? result.months : "—", accent: false },
+          { label: "DAYS",   value: hasValidDob && result ? result.days   : "—", accent: false },
         ].map((t) => (
-          <div key={t.label} style={{ ...s.tile, background: t.bg }}>
-            <span style={s.tileNum}>{t.value}</span>
-            <span style={s.tileLabel}>{t.label}</span>
+          <div
+            key={t.label}
+            style={{
+              flex: 1,
+              borderRadius: 16,
+              padding: "26px 10px 22px",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              gap: 10,
+              background: t.accent ? "var(--accent)" : "var(--bg-subtle)",
+              border: t.accent ? "none" : "1px solid var(--border)",
+            }}
+          >
+            <span style={{ fontSize: 46, fontWeight: 700, color: t.accent ? "#fff" : "var(--text)", lineHeight: 1 }}>
+              {t.value}
+            </span>
+            <span style={{ fontSize: 12, fontWeight: 600, color: t.accent ? "rgba(255,255,255,0.85)" : "var(--text-muted)", letterSpacing: "1.5px" }}>
+              {t.label}
+            </span>
           </div>
         ))}
       </div>
 
       {/* Total Duration */}
-      <div style={s.durationBox}>
-        <p style={s.durationTitle}>Total Duration</p>
-        <div style={s.durationList}>
+      <div style={{ background: "var(--bg-card)", borderRadius: 16, padding: "20px 22px", border: "1px solid var(--border)" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
           {[
             { label: "Total Days",    value: result ? result.totalDays.toLocaleString()    : "—" },
             { label: "Total Hours",   value: result ? result.totalHours.toLocaleString()   : "—" },
             { label: "Total Minutes", value: result ? result.totalMinutes.toLocaleString() : "—" },
           ].map((item) => (
-            <div key={item.label} style={s.durationRow}>
-              <span style={s.durationKey}>{item.label}</span>
-              <span style={s.durationVal}>{item.value}</span>
+            <div
+              key={item.label}
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+                padding: "13px 16px",
+                border: "1px solid var(--border)",
+                borderRadius: 10,
+                background: "var(--bg-subtle)",
+              }}
+            >
+              <span style={{ fontSize: 14, color: "var(--text)", fontWeight: 500 }}>{item.label}</span>
+              <span style={{ fontSize: 14, color: "var(--text)", fontWeight: 700 }}>{item.value}</span>
             </div>
           ))}
         </div>
@@ -136,25 +187,53 @@ export function AgeClient() {
 
       {/* Next Birthday */}
       {result && (
-        <div style={s.birthdayBox}>
-          <div style={s.birthdayLeft}>
-            <div style={s.giftIcon}>
+        <div
+          style={{
+            background: "var(--accent-light)",
+            borderRadius: 16,
+            padding: "18px 24px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            border: "1px solid var(--border)",
+          }}
+        >
+          <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+            <div
+              style={{
+                background: "var(--bg-card)",
+                border: "1px solid var(--border)",
+                borderRadius: 10,
+                padding: 10,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                <rect x="3" y="10" width="18" height="11" rx="1.5" stroke="#4f46e5" strokeWidth="1.6"/>
-                <path d="M3 14h18" stroke="#4f46e5" strokeWidth="1.4"/>
-                <rect x="9" y="10" width="6" height="11" stroke="#4f46e5" strokeWidth="1.4"/>
-                <path d="M12 10C12 10 9 8 9 5.5a3 3 0 0 1 3-3" stroke="#4f46e5" strokeWidth="1.4" strokeLinecap="round"/>
-                <path d="M12 10C12 10 15 8 15 5.5a3 3 0 0 0-3-3" stroke="#4f46e5" strokeWidth="1.4" strokeLinecap="round"/>
+                <rect x="3" y="10" width="18" height="11" rx="1.5" stroke="var(--accent)" strokeWidth="1.6"/>
+                <path d="M3 14h18" stroke="var(--accent)" strokeWidth="1.4"/>
+                <rect x="9" y="10" width="6" height="11" stroke="var(--accent)" strokeWidth="1.4"/>
+                <path d="M12 10C12 10 9 8 9 5.5a3 3 0 0 1 3-3" stroke="var(--accent)" strokeWidth="1.4" strokeLinecap="round"/>
+                <path d="M12 10C12 10 15 8 15 5.5a3 3 0 0 0-3-3" stroke="var(--accent)" strokeWidth="1.4" strokeLinecap="round"/>
               </svg>
             </div>
             <div>
-              <p style={s.birthdayMeta}>NEXT BIRTHDAY</p>
-              <p style={s.birthdayDate}>{result.nextBirthday.date}</p>
+              <p style={{ fontSize: 11, fontWeight: 700, color: "var(--accent)", letterSpacing: "1px", margin: "0 0 4px 0" }}>
+                NEXT BIRTHDAY
+              </p>
+              <p style={{ fontSize: 15, fontWeight: 700, color: "var(--text)", margin: 0 }}>
+                {result.nextBirthday.date}
+              </p>
             </div>
           </div>
-          <div style={s.birthdayRight}>
-            <span style={s.daysAway}>{result.nextBirthday.days.toLocaleString()}</span>
-            <span style={s.daysAwayLabel}>days away</span>
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
+            <span style={{ fontSize: 36, fontWeight: 800, color: "var(--accent)", lineHeight: 1 }}>
+              {result.nextBirthday.days.toLocaleString()}
+            </span>
+            <span style={{ fontSize: 13, color: "var(--text-muted)", fontWeight: 500, marginTop: 2 }}>
+              days away
+            </span>
           </div>
         </div>
       )}
@@ -162,171 +241,3 @@ export function AgeClient() {
     </div>
   );
 }
-
-const s: Record<string, React.CSSProperties> = {
-  container: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "20px",
-    width: "100%",
-    maxWidth: "560px",
-    margin: "0 auto",
-    padding: "16px 0",
-    fontFamily: "'Segoe UI', sans-serif",
-  },
-  inputCard: {
-    background: "#fff",
-    borderRadius: "16px",
-    padding: "20px 24px",
-    boxShadow: "0 1px 6px rgba(0,0,0,0.07)",
-  },
-  row: {
-    display: "flex",
-    gap: "16px",
-  },
-  field: {
-    flex: 1,
-    display: "flex",
-    flexDirection: "column",
-    gap: "8px",
-  },
-  label: {
-    fontSize: "13px",
-    color: "#6b7280",
-    fontWeight: 500,
-    display: "flex",
-    alignItems: "center",
-    gap: "6px",
-  },
-  input: {
-    border: "1px solid #e5e7eb",
-    borderRadius: "10px",
-    padding: "10px 14px",
-    fontSize: "15px",
-    color: "#111827",
-    outline: "none",
-    width: "100%",
-    boxSizing: "border-box",
-    background: "#fff",
-    transition: "border-color 0.15s",
-  },
-  errorMsg: {
-    marginTop: "10px",
-    marginBottom: 0,
-    fontSize: "12px",
-    color: "#ef4444",
-    fontWeight: 500,
-  },
-  tiles: {
-    display: "flex",
-    gap: "12px",
-  },
-  tile: {
-    flex: 1,
-    borderRadius: "16px",
-    padding: "26px 10px 22px",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    gap: "10px",
-  },
-  tileNum: {
-    fontSize: "46px",
-    fontWeight: 700,
-    color: "#fff",
-    lineHeight: 1,
-  },
-  tileLabel: {
-    fontSize: "12px",
-    fontWeight: 600,
-    color: "rgba(255,255,255,0.85)",
-    letterSpacing: "1.5px",
-  },
-  durationBox: {
-    background: "#f3f4f6",
-    borderRadius: "16px",
-    padding: "20px 22px",
-  },
-  durationTitle: {
-    fontSize: "16px",
-    fontWeight: 700,
-    color: "#111827",
-    margin: "0 0 14px 0",
-  },
-  durationList: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "10px",
-  },
-  durationRow: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    padding: "13px 16px",
-    border: "1px solid #e5e7eb",
-    borderRadius: "10px",
-    background: "#fff",
-  },
-  durationKey: {
-    fontSize: "14px",
-    color: "#374151",
-    fontWeight: 500,
-  },
-  durationVal: {
-    fontSize: "14px",
-    color: "#111827",
-    fontWeight: 700,
-  },
-  birthdayBox: {
-    background: "#eef2ff",
-    borderRadius: "16px",
-    padding: "18px 24px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-  },
-  birthdayLeft: {
-    display: "flex",
-    alignItems: "center",
-    gap: "14px",
-  },
-  giftIcon: {
-    background: "#fff",
-    border: "1px solid #e0e4f5",
-    borderRadius: "10px",
-    padding: "10px",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  birthdayMeta: {
-    fontSize: "11px",
-    fontWeight: 700,
-    color: "#4f46e5",
-    letterSpacing: "1px",
-    margin: "0 0 4px 0",
-  },
-  birthdayDate: {
-    fontSize: "15px",
-    fontWeight: 700,
-    color: "#111827",
-    margin: 0,
-  },
-  birthdayRight: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "flex-end",
-  },
-  daysAway: {
-    fontSize: "36px",
-    fontWeight: 800,
-    color: "#4f46e5",
-    lineHeight: 1,
-  },
-  daysAwayLabel: {
-    fontSize: "13px",
-    color: "#6366f1",
-    fontWeight: 500,
-    marginTop: "2px",
-  },
-};

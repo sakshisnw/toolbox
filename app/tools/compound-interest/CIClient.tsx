@@ -26,7 +26,7 @@ function SliderRow({ icon, label, value, display, min, max, step, onChange, minL
       </div>
       <input type="range" min={min} max={max} step={step} value={value}
         onChange={e => onChange(Number(e.target.value))}
-        style={{ width: "100%", height: 4, appearance: "none", WebkitAppearance: "none", borderRadius: 4, outline: "none", cursor: "pointer", background: `linear-gradient(to right,var(--accent) ${pct}%,var(--border) ${pct}%)`, marginBottom: 4 }}
+        style={{ width: "100%", height: 4, appearance: "none", WebkitAppearance: "none", borderRadius: 4, outline: "none", cursor: "pointer", background: `linear-gradient(to right, var(--accent) ${pct}%, var(--border) ${pct}%)`, marginBottom: 4 }}
       />
       <div style={{ display: "flex", justifyContent: "space-between", fontSize: 11, color: "var(--text-muted)", marginTop: 2 }}>
         <span>{minLabel}</span><span>{maxLabel}</span>
@@ -153,14 +153,14 @@ export function CIClient() {
           <div style={{ fontSize: 10.5, fontWeight: 700, color: "var(--text-muted)", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 8 }}>Total Interest</div>
           <div style={{ fontSize: 24, fontWeight: 700, color: "var(--text)" }}>{formatCurrency(result.totalInterest)}</div>
         </div>
-        <div style={{ background: "#1e3a5f", borderRadius: 10, padding: "16px 20px" }}>
-          <div style={{ fontSize: 10.5, fontWeight: 700, color: "rgba(255,255,255,0.75)", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 8 }}>Final Amount</div>
-          <div style={{ fontSize: 24, fontWeight: 700, color: "#fff" }}>{formatCurrency(result.finalAmount)}</div>
+        <div style={{ background: "var(--bg-card-deep, #1e3a5f)", borderRadius: 10, padding: "16px 20px", border: "1px solid var(--border)" }}>
+          <div style={{ fontSize: 10.5, fontWeight: 700, color: "var(--text-muted)", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 8 }}>Final Amount</div>
+          <div style={{ fontSize: 24, fontWeight: 700, color: "var(--accent)" }}>{formatCurrency(result.finalAmount)}</div>
         </div>
       </div>
 
       {/* ── Growth Banner ── */}
-      <div style={{ background: "var(--accent-light)", border: "1px solid color-mix(in srgb, var(--accent) 30%, transparent)", borderRadius: 10, padding: "12px 20px", textAlign: "center" }}>
+      <div style={{ background: "var(--accent-light)", border: "1px solid var(--border)", borderRadius: 10, padding: "12px 20px", textAlign: "center" }}>
         <span style={{ fontSize: 13.5, fontWeight: 600, color: "var(--accent)" }}>↗ {growthPct}% growth over {years} years</span>
       </div>
 

@@ -19,19 +19,25 @@
   --accent-light: #E6F1FB;
   --accent-dark: #185FA5;
   --result-bg: #EFF6FF;
+  /* card variants used in dark mode */
+  --bg-card-alt: #f0ede8;
+  --bg-card-deep: #e4eef8;
 }
 
 .dark {
-  --bg: #111010;
-  --bg-card: #1a1918;
-  --bg-subtle: #232220;
-  --border: #2e2c2a;
-  --text: #f0ede8;
-  --text-muted: #8a8480;
+  --bg: #0d1422;
+  --bg-card: #141d2f;
+  --bg-subtle: #1a2538;
+  --border: #253047;
+  --text: #e8edf5;
+  --text-muted: #7a8ea8;
   --accent: #378ADD;
-  --accent-light: #0c2340;
-  --accent-dark: #85B7EB;
-  --result-bg: #0e1e2e;
+  --accent-light: #0e2040;
+  --accent-dark: #90bfed;
+  --result-bg: #101b30;
+  /* dark-only card variants */
+  --bg-card-alt: #1a2538;
+  --bg-card-deep: #0f1928;
 }
 
 * {
@@ -80,6 +86,21 @@ h1, h2, h3, h4 {
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: 1.25rem;
+}
+
+/* Dark mode input focus ring */
+.dark .input-base:focus {
+  box-shadow: 0 0 0 3px rgba(55, 138, 221, 0.2);
+}
+
+/* Dark mode slider track */
+.dark input[type="range"] {
+  accent-color: var(--accent);
+}
+
+/* Dark mode card subtle variant */
+.dark .card {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
 /* Result box */
