@@ -204,8 +204,8 @@ export function BMIClient() {
                 className="text-xs capitalize flex-1 py-1.5 rounded-lg transition-all"
                 style={{
                   border: gender === g ? "none" : "0.5px solid var(--border)",
-                  background: gender === g ? "#378ADD" : "var(--bg-card)",
-                  color: gender === g ? "white" : "var(--text-muted)",
+                  background: gender === g ? "var(--accent)" : "var(--bg-card)",
+                  color: gender === g ? "#fff" : "var(--text-muted)",
                   fontWeight: gender === g ? 500 : 400,
                 }}
               >
@@ -308,7 +308,7 @@ export function BMIClient() {
         <button
           onClick={calculate}
           className="w-full py-2.5 rounded-lg text-sm font-medium text-white transition-colors mt-1"
-          style={{ background: "#378ADD", border: "none" }}
+          style={{ background: "var(--accent)", border: "none" }}
         >
           Calculate BMI
         </button>
@@ -409,8 +409,8 @@ export function BMIClient() {
           }}
         >
           {[
-            { label: "Healthy BMI range", value: "18.5 – 24.9", color: "#378ADD" },
-            { label: "Healthy weight for height", value: healthyRange || "-- Kg", color: "#378ADD" },
+            { label: "Healthy BMI range", value: "18.5 – 24.9", color: "var(--accent)" },
+            { label: "Healthy weight for height", value: healthyRange || "-- Kg", color: "var(--accent)" },
             {
               label: "Category",
               value: result?.category || "--",
@@ -419,7 +419,7 @@ export function BMIClient() {
             {
               label: "Action",
               value: action || "--",
-              color: action === "Maintain weight" ? "#10b981" : action ? "#ef4444" : "#378ADD",
+              color: action === "Maintain weight" ? "#10b981" : action ? "#ef4444" : "var(--accent)",
             },
           ].map((item, i) => (
             <div
