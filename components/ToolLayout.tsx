@@ -8,6 +8,8 @@ import {
   generatorTools,
   type Tool,
 } from "@/utils/tools";
+import { ShieldCheck } from "lucide-react";
+import { ToolIcon } from "./ToolIcon";
 
 interface SEOContent {
   whatIs?: string;
@@ -97,7 +99,7 @@ export function ToolLayout({
           color: "var(--text-muted)",
         }}
       >
-        <span className="text-sm flex-shrink-0">🔒</span>
+        <ShieldCheck size={14} strokeWidth={2} style={{ color: "var(--accent)", flexShrink: 0 }} />
         <span>
           <strong style={{ color: "var(--text)" }}>100% private.</strong>{" "}
           All processing happens in your browser — no data is ever sent to a server.
@@ -328,12 +330,12 @@ export function ToolLayout({
                 }}
               >
                 <span
-                  className="w-8 h-8 rounded-lg flex items-center justify-center text-base flex-shrink-0"
+                  className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
                   style={{
                     background: `color-mix(in srgb, ${t.color} 12%, transparent)`,
                   }}
                 >
-                  {t.icon}
+                  <ToolIcon name={t.icon} size={15} color={t.color} strokeWidth={2} />
                 </span>
                 <div className="min-w-0">
                   <p
