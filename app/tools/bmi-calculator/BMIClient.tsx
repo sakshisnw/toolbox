@@ -203,9 +203,9 @@ export function BMIClient() {
                 onClick={() => setGender(g)}
                 className="text-xs capitalize flex-1 py-1.5 rounded-lg transition-all"
                 style={{
-                  border: "0.5px solid var(--border)",
-                  background: gender === g ? "#E6F1FB" : "var(--bg-card)",
-                  color: gender === g ? "#0C447C" : "var(--text-muted)",
+                  border: gender === g ? "none" : "0.5px solid var(--border)",
+                  background: gender === g ? "#378ADD" : "var(--bg-card)",
+                  color: gender === g ? "white" : "var(--text-muted)",
                   fontWeight: gender === g ? 500 : 400,
                 }}
               >
@@ -310,7 +310,7 @@ export function BMIClient() {
           className="w-full py-2.5 rounded-lg text-sm font-medium text-white transition-colors mt-1"
           style={{ background: "#378ADD", border: "none" }}
         >
-          Calculate Me
+          Calculate BMI
         </button>
       </div>
 
