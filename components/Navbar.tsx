@@ -3,13 +3,19 @@ import Link from "next/link";
 import { useTheme } from "./ThemeProvider";
 import { useState, useRef, useEffect } from "react";
 import { calculatorTools, imageTools, textTools, pdfTools, generatorTools, tools } from "@/utils/tools";
+import {
+  Search, Sun, Moon, Menu, X, ChevronDown,
+  Calculator, ImageIcon, Code2, FileText, Wand2,
+  Zap,
+} from "lucide-react";
+import { ToolIcon } from "./ToolIcon";
 
 const categories = [
-  { id: "calculators", name: "Calculators", tools: calculatorTools, icon: "🧮" },
-  { id: "image", name: "Image Tools", tools: imageTools, icon: "🖼️" },
-  { id: "text", name: "Developer Tools", tools: textTools, icon: "💻" },
-  { id: "pdf", name: "PDF Tools", tools: pdfTools, icon: "📄" },
-  { id: "generators", name: "Generators", tools: generatorTools, icon: "⚙️" },
+  { id: "calculators", name: "Calculators",    tools: calculatorTools,  Icon: Calculator },
+  { id: "image",       name: "Image Tools",    tools: imageTools,       Icon: ImageIcon  },
+  { id: "text",        name: "Developer Tools",tools: textTools,        Icon: Code2      },
+  { id: "pdf",         name: "PDF Tools",      tools: pdfTools,         Icon: FileText   },
+  { id: "generators",  name: "Generators",     tools: generatorTools,   Icon: Wand2      },
 ];
 
 export function Navbar() {
@@ -68,8 +74,11 @@ export function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2 group">
             <span className="text-lg font-bold gradient-text" style={{ fontFamily: "var(--font-display)" }}>
-              ⚡ Toolbox
+            <span className="inline-flex items-center gap-1.5">
+              <Zap size={16} strokeWidth={2.5} style={{ color: "var(--accent)" }} />
+              Toolbox
             </span>
+          </span>
           </Link>
 
           {/* Desktop nav with dropdowns */}
@@ -78,11 +87,12 @@ export function Navbar() {
               <div key={cat.id} className="relative">
                 <button
                   onClick={() => setActiveDropdown(activeDropdown === cat.id ? null : cat.id)}
-                  className="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors hover:text-orange-500 flex items-center gap-1"
+                  className="px-3 py-1.5 rounded-lg text-xs font-medium transition-colors flex items-center gap-1.5"
                   style={{ color: "var(--text-muted)", fontFamily: "var(--font-display)" }}
                 >
+                  <cat.Icon size={13} strokeWidth={2} />
                   {cat.name}
-                  <span className={`transition-transform ${activeDropdown === cat.id ? "rotate-180" : ""}`}>▼</span>
+                  <ChevronDown size={11} className={`transition-transform ${activeDropdown === cat.id ? "rotate-180" : ""}`} />
                 </button>
 
                 {/* Dropdown */}
@@ -92,17 +102,23 @@ export function Navbar() {
                     style={{ background: "var(--bg-card)", borderColor: "var(--border)" }}
                   >
                     <div className="p-2">
-                      <div className="text-xs font-medium px-2 py-1 mb-1" style={{ color: "var(--text-muted)" }}>
-                        {cat.icon} {cat.name}
+                      <div className="text-xs font-medium px-2 py-1 mb-1 flex items-center gap-1.5" style={{ color: "var(--text-muted)" }}>
+                        <cat.Icon size={12} strokeWidth={2} /> {cat.name}
                       </div>
                       {cat.tools.slice(0, 6).map((tool) => (
                         <Link
                           key={tool.slug}
                           href={`/tools/${tool.slug}`}
                           onClick={() => setActiveDropdown(null)}
-                          className="flex items-center gap-2 px-2 py-2 rounded-lg text-sm hover:bg-orange-50 dark:hover:bg-orange-900/20 transition-colors"
+                          className="flex items-center gap-2 px-2 py-2 rounded-lg text-sm transition-colors"
+                          style={{ color: "var(--text)" }}
                         >
-                          <span>{tool.icon}</span>
+                          <span
+                            className="w-6 h-6 rounded-md flex items-center justify-center flex-shrink-0"
+                            style={{ background: `color-mix(in srgb, ${tool.color} 15%, transparent)` }}
+                          >
+                            <ToolIcon name={tool.icon} size={13} color={tool.color} strokeWidth={2} />
+                          </span>
                           <span style={{ fontFamily: "var(--font-display)" }}>{tool.shortName}</span>
                         </Link>
                       ))}
@@ -128,7 +144,7 @@ export function Navbar() {
               className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs transition-colors"
               style={{ background: "var(--bg-subtle)", color: "var(--text-muted)" }}
             >
-              <span>🔍</span>
+              <Search size={13} strokeWidth={2} />
               <span>Search</span>
               <span className="px-1.5 py-0.5 rounded text-xs" style={{ background: "var(--border)" }}>⌘K</span>
             </button>
@@ -140,7 +156,7 @@ export function Navbar() {
               style={{ background: "var(--bg-subtle)", color: "var(--text-muted)" }}
               aria-label="Toggle theme"
             >
-              {theme === "dark" ? "☀️" : "🌙"}
+              {theme === "dark" ? <Sun size={16} strokeWidth={2} /> : <Moon size={16} strokeWidth={2} />}
             </button>
 
             {/* Mobile hamburger */}
@@ -150,9 +166,10 @@ export function Navbar() {
               onClick={() => setMobileOpen((o) => !o)}
               aria-label="Open menu"
             >
-              <span className="w-4 h-0.5 block" style={{ background: "var(--text)" }} />
-              <span className="w-4 h-0.5 block" style={{ background: "var(--text)" }} />
-              <span className="w-3 h-0.5 block" style={{ background: "var(--text)" }} />
+              {mobileOpen
+                ? <X size={16} strokeWidth={2} style={{ color: "var(--text)" }} />
+                : <Menu size={16} strokeWidth={2} style={{ color: "var(--text)" }} />
+              }
             </button>
           </div>
         </div>
@@ -166,7 +183,7 @@ export function Navbar() {
             {categories.map((cat) => (
               <div key={cat.id} className="mb-4">
                 <div className="flex items-center gap-2 text-xs font-medium mb-2 px-2" style={{ color: "var(--text-muted)" }}>
-                  <span>{cat.icon}</span>
+                  <cat.Icon size={13} strokeWidth={2} />
                   <span>{cat.name}</span>
                 </div>
                 <div className="grid grid-cols-2 gap-1">
@@ -178,7 +195,7 @@ export function Navbar() {
                       className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm"
                       style={{ background: "var(--bg-subtle)", color: "var(--text)" }}
                     >
-                      <span>{tool.icon}</span>
+                      <ToolIcon name={tool.icon} size={14} color={tool.color} strokeWidth={2} />
                       <span>{tool.shortName}</span>
                     </Link>
                   ))}
@@ -202,7 +219,7 @@ export function Navbar() {
             onClick={(e) => e.stopPropagation()}
           >
             <div className="p-4 border-b" style={{ borderColor: "var(--border)" }}>
-              <div className="relative">
+                <div className="relative">
                 <input
                   type="text"
                   value={searchQuery}
@@ -212,7 +229,7 @@ export function Navbar() {
                   className="w-full pl-10 pr-4 py-3 rounded-xl border"
                   style={{ background: "var(--bg-subtle)", borderColor: "var(--border)", color: "var(--text)" }}
                 />
-                <span className="absolute left-3 top-1/2 -translate-y-1/2">🔍</span>
+                <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: "var(--text-muted)" }} />
                 <span className="absolute right-3 top-1/2 -translate-y-1/2 text-xs px-2 py-1 rounded" style={{ background: "var(--border)" }}>
                   ESC
                 </span>
@@ -228,10 +245,10 @@ export function Navbar() {
                     className="flex items-center gap-3 px-3 py-3 rounded-xl hover:bg-orange-50 dark:hover:bg-orange-900/20 transition-colors"
                   >
                     <span 
-                      className="w-10 h-10 rounded-lg flex items-center justify-center text-lg"
+                      className="w-10 h-10 rounded-lg flex items-center justify-center"
                       style={{ background: `color-mix(in srgb, ${tool.color} 15%, transparent)` }}
                     >
-                      {tool.icon}
+                      <ToolIcon name={tool.icon} size={18} color={tool.color} strokeWidth={1.8} />
                     </span>
                     <div className="flex-1">
                       <p className="font-medium" style={{ fontFamily: "var(--font-display)" }}>{tool.name}</p>

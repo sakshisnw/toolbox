@@ -3,6 +3,8 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { tools } from "@/utils/tools";
+import { Search } from "lucide-react";
+import { ToolIcon } from "./ToolIcon";
 
 export function ToolSearch() {
   const [query, setQuery] = useState("");
@@ -65,7 +67,7 @@ export function ToolSearch() {
             color: "var(--text)",
           }}
         />
-        <span className="absolute left-3 top-1/2 -translate-y-1/2 text-lg">🔍</span>
+        <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: "var(--text-muted)" }} />
         <span
           className="absolute right-3 top-1/2 -translate-y-1/2 text-xs px-2 py-1 rounded"
           style={{ background: "var(--bg-subtle)", color: "var(--text-muted)" }}
@@ -90,10 +92,10 @@ export function ToolSearch() {
               className="flex items-center gap-3 px-4 py-3 hover:bg-orange-50 dark:hover:bg-orange-900/20 transition-colors"
             >
               <span
-                className="w-8 h-8 rounded-lg flex items-center justify-center text-sm flex-shrink-0"
+                className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
                 style={{ background: `color-mix(in srgb, ${tool.color} 15%, transparent)` }}
               >
-                {tool.icon}
+                <ToolIcon name={tool.icon} size={15} color={tool.color} strokeWidth={2} />
               </span>
               <div className="flex-1 min-w-0">
                 <p className="font-medium text-sm truncate" style={{ fontFamily: "var(--font-display)" }}>

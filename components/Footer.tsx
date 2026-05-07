@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { calculatorTools, imageTools, textTools, pdfTools, generatorTools } from "@/utils/tools";
+import { Zap } from "lucide-react";
 
 const footerLinks = {
   tools: [
@@ -28,8 +29,9 @@ export function Footer() {
           {/* Brand */}
           <div className="col-span-2">
             <Link href="/" className="inline-block mb-4">
-              <span className="text-lg font-bold gradient-text" style={{ fontFamily: "var(--font-display)" }}>
-                ⚡ Toolbox
+              <span className="text-lg font-bold gradient-text inline-flex items-center gap-1.5" style={{ fontFamily: "var(--font-display)" }}>
+                <Zap size={16} strokeWidth={2.5} style={{ color: "var(--accent)" }} />
+                Toolbox
               </span>
             </Link>
             <p className="text-sm mb-4" style={{ color: "var(--text-muted)" }}>
