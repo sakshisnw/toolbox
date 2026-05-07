@@ -416,7 +416,11 @@ export function BMIClient() {
               value: result?.category || "--",
               color: result ? categoryColor[result.category] : "#378ADD",
             },
-            { label: "Action", value: action || "--", color: "#ef4444" },
+            {
+              label: "Action",
+              value: action || "--",
+              color: action === "Maintain weight" ? "#10b981" : action ? "#ef4444" : "#378ADD",
+            },
           ].map((item, i) => (
             <div
               key={i}
