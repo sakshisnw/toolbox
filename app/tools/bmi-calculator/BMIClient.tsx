@@ -143,7 +143,7 @@ export function BMIClient() {
     alignItems: "center",
     border: "0.5px solid var(--border)",
     borderRadius: 8,
-    background: "var(--bg-card)",
+    background: "var(--bg-subtle)",
     overflow: "hidden",
   };
 
@@ -153,7 +153,7 @@ export function BMIClient() {
     background: "transparent",
     padding: "9px 8px 9px 0",
     fontSize: 12,
-    color: "#378ADD",
+    color: "var(--accent)",
     cursor: "pointer",
     flexShrink: 0,
   };
@@ -414,7 +414,7 @@ export function BMIClient() {
             {
               label: "Category",
               value: result?.category || "--",
-              color: result ? categoryColor[result.category] : "#378ADD",
+              color: result ? categoryColor[result.category] : "var(--accent)",
             },
             {
               label: "Action",
