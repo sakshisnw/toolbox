@@ -15,7 +15,7 @@ function DonutChart({ principalPct }: { principalPct: number }) {
       {/* Principal arc */}
       <circle
         cx={cx} cy={cy} r={r} fill="none"
-        stroke="#378ADD"
+        stroke="var(--accent)"
         strokeWidth="24"
         strokeLinecap="butt"
         strokeDasharray={`${pDash} ${iDash}`}
@@ -62,7 +62,7 @@ function SliderInput({
 }) {
   const pct = ((value - min) / (max - min)) * 100;
   const trackStyle = {
-    background: `linear-gradient(to right, #378ADD ${pct}%, var(--color-border-tertiary) ${pct}%)`,
+    background: `linear-gradient(to right, var(--accent) ${pct}%, var(--color-border-tertiary) ${pct}%)`,
   } as React.CSSProperties;
 
   return (
@@ -76,7 +76,7 @@ function SliderInput({
             borderRadius: "var(--border-radius-md)",
             padding: "3px 8px",
           }}>
-            {prefix && <span style={{ fontSize: 11, color: "#378ADD", fontWeight: 500 }}>{prefix}</span>}
+            {prefix && <span style={{ fontSize: 11, color: "var(--accent)", fontWeight: 500 }}>{prefix}</span>}
             <input
               type="number"
               value={display}
@@ -86,12 +86,12 @@ function SliderInput({
                 width: prefix ? 80 : 36,
                 background: "none", border: "none",
                 fontSize: 12, fontFamily: "var(--font-mono)",
-                fontWeight: 500, color: "#378ADD",
+                fontWeight: 500, color: "var(--accent)",
                 textAlign: "right", padding: 0,
                 outline: "none",
               }}
             />
-            {suffix && <span style={{ fontSize: 11, color: "#378ADD", fontWeight: 500 }}>{suffix}</span>}
+            {suffix && <span style={{ fontSize: 11, color: "var(--accent)", fontWeight: 500 }}>{suffix}</span>}
           </div>
           {extra}
         </div>
@@ -193,7 +193,7 @@ export function EMIClient() {
                         padding: "4px 8px",
                         fontSize: 11, fontWeight: 500,
                         border: "none", cursor: "pointer",
-                        background: tenureType === u ? "#378ADD" : "transparent",
+                        background: tenureType === u ? "var(--accent)" : "transparent",
                         color: tenureType === u ? "white" : "var(--color-text-secondary)",
                         fontFamily: "var(--font-sans)",
                       }}
@@ -211,7 +211,7 @@ export function EMIClient() {
             {/* Legend */}
             <div style={{ display: "flex", gap: 12, fontSize: 11, color: "var(--color-text-secondary)" }}>
               <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
-                <span style={{ width: 8, height: 8, borderRadius: "50%", background: "#378ADD", display: "inline-block" }} />
+                <span style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--accent)", display: "inline-block" }} />
                 Principal
               </span>
               <span style={{ display: "flex", alignItems: "center", gap: 4 }}>
@@ -240,7 +240,7 @@ export function EMIClient() {
 
             {/* Pct labels */}
             <div style={{ fontSize: 11, color: "var(--color-text-secondary)", textAlign: "center", lineHeight: 2 }}>
-              <div><span style={{ color: "#378ADD", fontWeight: 500 }}>{principalPct.toFixed(1)}%</span> principal</div>
+              <div><span style={{ color: "var(--accent)", fontWeight: 500 }}>{principalPct.toFixed(1)}%</span> principal</div>
               <div><span style={{ color: "#D85A30", fontWeight: 500 }}>{interestPct.toFixed(1)}%</span> interest</div>
             </div>
           </div>
@@ -261,7 +261,7 @@ export function EMIClient() {
               { label: "Monthly EMI", value: formatCurrency(result.emi), color: "var(--color-text-primary)", large: true },
               { label: "Principal amount", value: formatCurrency(principal), color: "var(--color-text-primary)" },
               { label: "Total interest", value: formatCurrency(result.totalInterest), color: "#D85A30" },
-              { label: "Total amount", value: formatCurrency(result.totalAmount), color: "#378ADD" },
+              { label: "Total amount", value: formatCurrency(result.totalAmount), color: "var(--accent)" },
             ].map(({ label, value, color, large }, i, arr) => (
               <div
                 key={label}
@@ -330,7 +330,7 @@ export function EMIClient() {
                       }}>
                         <td style={{ padding: "7px 10px", fontSize: 11, fontFamily: "var(--font-mono)", color: "var(--color-text-secondary)" }}>{row.month}</td>
                         <td style={{ padding: "7px 10px", fontSize: 11, fontFamily: "var(--font-mono)" }}>{formatCurrency(row.emi)}</td>
-                        <td style={{ padding: "7px 10px", fontSize: 11, fontFamily: "var(--font-mono)", color: "#378ADD" }}>{formatCurrency(row.principal)}</td>
+                        <td style={{ padding: "7px 10px", fontSize: 11, fontFamily: "var(--font-mono)", color: "var(--accent)" }}>{formatCurrency(row.principal)}</td>
                         <td style={{ padding: "7px 10px", fontSize: 11, fontFamily: "var(--font-mono)", color: "#D85A30" }}>{formatCurrency(row.interest)}</td>
                         <td style={{ padding: "7px 10px", fontSize: 11, fontFamily: "var(--font-mono)" }}>{formatCurrency(row.balance)}</td>
                       </tr>
