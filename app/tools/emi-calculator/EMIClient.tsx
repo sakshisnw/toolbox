@@ -62,18 +62,18 @@ function SliderInput({
 }) {
   const pct = ((value - min) / (max - min)) * 100;
   const trackStyle = {
-    background: `linear-gradient(to right, var(--accent) ${pct}%, var(--color-border-tertiary) ${pct}%)`,
+    background: `linear-gradient(to right, var(--accent) ${pct}%, var(--border) ${pct}%)`,
   } as React.CSSProperties;
 
   return (
     <div>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
-        <span style={{ fontSize: 12, color: "var(--color-text-secondary)" }}>{label}</span>
+        <span style={{ fontSize: 12, color: "var(--text-muted)" }}>{label}</span>
         <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
           <div style={{
             display: "flex", alignItems: "center", gap: 4,
-            background: "var(--color-background-secondary)",
-            borderRadius: "var(--border-radius-md)",
+            background: "var(--bg-subtle)",
+            borderRadius: 6,
             padding: "3px 8px",
           }}>
             {prefix && <span style={{ fontSize: 11, color: "var(--accent)", fontWeight: 500 }}>{prefix}</span>}
@@ -127,12 +127,12 @@ export function EMIClient() {
   const maxTenure = tenureType === "years" ? 30 : 360;
 
   return (
-    <div style={{ fontFamily: "var(--font-sans)" }}>
+    <div style={{ fontFamily: "var(--font-body)" }}>
       {/* Main card */}
       <div style={{
-        background: "var(--color-background-primary)",
-        border: "0.5px solid var(--color-border-tertiary)",
-        borderRadius: "var(--border-radius-lg)",
+        background: "var(--bg-card)",
+        border: "0.5px solid var(--border)",
+        borderRadius: 12,
         padding: "1.25rem",
         marginBottom: "0.75rem",
       }}>
@@ -181,8 +181,8 @@ export function EMIClient() {
               extra={
                 <div style={{
                   display: "flex",
-                  border: "0.5px solid var(--color-border-tertiary)",
-                  borderRadius: "var(--border-radius-md)",
+                  border: "0.5px solid var(--border)",
+                  borderRadius: 6,
                   overflow: "hidden",
                 }}>
                   {(["months", "years"] as const).map((u) => (
@@ -194,8 +194,8 @@ export function EMIClient() {
                         fontSize: 11, fontWeight: 500,
                         border: "none", cursor: "pointer",
                         background: tenureType === u ? "var(--accent)" : "transparent",
-                        color: tenureType === u ? "white" : "var(--color-text-secondary)",
-                        fontFamily: "var(--font-sans)",
+                        color: tenureType === u ? "white" : "var(--text-muted)",
+                        fontFamily: "var(--font-body)",
                       }}
                     >
                       {u === "months" ? "Mo" : "Yr"}
@@ -227,11 +227,11 @@ export function EMIClient() {
                 position: "absolute", top: "50%", left: "50%",
                 transform: "translate(-50%,-50%)", textAlign: "center", pointerEvents: "none",
               }}>
-                <div style={{ fontSize: 10, color: "var(--color-text-secondary)", marginBottom: 3 }}>Monthly EMI</div>
+                <div style={{ fontSize: 10, color: "var(--text-muted)", marginBottom: 3 }}>Monthly EMI</div>
                 <div style={{
                   fontSize: 15, fontWeight: 500,
                   fontFamily: "var(--font-mono)",
-                  color: "var(--color-text-primary)", lineHeight: 1.2,
+                  color: "var(--text)", lineHeight: 1.2,
                 }}>
                   {result ? formatCurrency(result.emi) : "—"}
                 </div>
@@ -239,7 +239,7 @@ export function EMIClient() {
             </div>
 
             {/* Pct labels */}
-            <div style={{ fontSize: 11, color: "var(--color-text-secondary)", textAlign: "center", lineHeight: 2 }}>
+            <div style={{ fontSize: 11, color: "var(--text-muted)", textAlign: "center", lineHeight: 2 }}>
               <div><span style={{ color: "var(--accent)", fontWeight: 500 }}>{principalPct.toFixed(1)}%</span> principal</div>
               <div><span style={{ color: "#D85A30", fontWeight: 500 }}>{interestPct.toFixed(1)}%</span> interest</div>
             </div>
@@ -251,15 +251,15 @@ export function EMIClient() {
       {result && (
         <>
           <div style={{
-            background: "var(--color-background-primary)",
-            border: "0.5px solid var(--color-border-tertiary)",
-            borderRadius: "var(--border-radius-lg)",
+            background: "var(--bg-card)",
+            border: "0.5px solid var(--border)",
+            borderRadius: 12,
             padding: "0 1.25rem",
             marginBottom: "0.75rem",
           }}>
             {[
-              { label: "Monthly EMI", value: formatCurrency(result.emi), color: "var(--color-text-primary)", large: true },
-              { label: "Principal amount", value: formatCurrency(principal), color: "var(--color-text-primary)" },
+              { label: "Monthly EMI", value: formatCurrency(result.emi), color: "var(--text)", large: true },
+              { label: "Principal amount", value: formatCurrency(principal), color: "var(--text)" },
               { label: "Total interest", value: formatCurrency(result.totalInterest), color: "#D85A30" },
               { label: "Total amount", value: formatCurrency(result.totalAmount), color: "var(--accent)" },
             ].map(({ label, value, color, large }, i, arr) => (
@@ -268,10 +268,10 @@ export function EMIClient() {
                 style={{
                   display: "flex", justifyContent: "space-between", alignItems: "center",
                   padding: "12px 0",
-                  borderBottom: i < arr.length - 1 ? "0.5px solid var(--color-border-tertiary)" : "none",
+                  borderBottom: i < arr.length - 1 ? "0.5px solid var(--border)" : "none",
                 }}
               >
-                <span style={{ fontSize: 12, color: "var(--color-text-secondary)" }}>{label}</span>
+                <span style={{ fontSize: 12, color: "var(--text-muted)" }}>{label}</span>
                 <span style={{
                   fontSize: large ? 15 : 12,
                   fontWeight: large ? 500 : 400,
@@ -288,11 +288,11 @@ export function EMIClient() {
             onClick={() => setShowSchedule((s) => !s)}
             style={{
               width: "100%", padding: "11px",
-              background: "var(--color-background-secondary)",
-              border: "0.5px solid var(--color-border-tertiary)",
-              borderRadius: "var(--border-radius-lg)",
-              fontSize: 12, color: "var(--color-text-secondary)",
-              cursor: "pointer", fontFamily: "var(--font-sans)",
+              background: "var(--bg-subtle)",
+              border: "0.5px solid var(--border)",
+              borderRadius: 12,
+              fontSize: 12, color: "var(--text-muted)",
+              cursor: "pointer", fontFamily: "var(--font-body)",
               marginBottom: showSchedule ? "0.5rem" : 0,
             }}
           >
@@ -301,21 +301,21 @@ export function EMIClient() {
 
           {showSchedule && (
             <div style={{
-              background: "var(--color-background-primary)",
-              border: "0.5px solid var(--color-border-tertiary)",
-              borderRadius: "var(--border-radius-lg)",
+              background: "var(--bg-card)",
+              border: "0.5px solid var(--border)",
+              borderRadius: 12,
               overflow: "hidden",
             }}>
               <div style={{ overflowX: "auto", maxHeight: 280, overflowY: "auto" }}>
                 <table style={{ width: "100%", borderCollapse: "collapse" }}>
                   <thead>
-                    <tr style={{ background: "var(--color-background-secondary)", position: "sticky", top: 0 }}>
+                    <tr style={{ background: "var(--bg-subtle)", position: "sticky", top: 0 }}>
                       {["Month", "EMI", "Principal", "Interest", "Balance"].map((h) => (
                         <th key={h} style={{
                           padding: "9px 10px", textAlign: "left",
                           fontSize: 11, fontWeight: 500,
-                          color: "var(--color-text-secondary)",
-                          borderBottom: "0.5px solid var(--color-border-tertiary)",
+                          color: "var(--text-muted)",
+                          borderBottom: "0.5px solid var(--border)",
                         }}>
                           {h}
                         </th>
@@ -325,10 +325,10 @@ export function EMIClient() {
                   <tbody>
                     {result.schedule.slice(0, 120).map((row, i) => (
                       <tr key={row.month} style={{
-                        borderBottom: "0.5px solid var(--color-border-tertiary)",
-                        background: i % 2 === 0 ? "transparent" : "var(--color-background-secondary)",
+                        borderBottom: "0.5px solid var(--border)",
+                        background: i % 2 === 0 ? "transparent" : "var(--bg-subtle)",
                       }}>
-                        <td style={{ padding: "7px 10px", fontSize: 11, fontFamily: "var(--font-mono)", color: "var(--color-text-secondary)" }}>{row.month}</td>
+                        <td style={{ padding: "7px 10px", fontSize: 11, fontFamily: "var(--font-mono)", color: "var(--text-muted)" }}>{row.month}</td>
                         <td style={{ padding: "7px 10px", fontSize: 11, fontFamily: "var(--font-mono)" }}>{formatCurrency(row.emi)}</td>
                         <td style={{ padding: "7px 10px", fontSize: 11, fontFamily: "var(--font-mono)", color: "var(--accent)" }}>{formatCurrency(row.principal)}</td>
                         <td style={{ padding: "7px 10px", fontSize: 11, fontFamily: "var(--font-mono)", color: "#D85A30" }}>{formatCurrency(row.interest)}</td>
@@ -341,8 +341,8 @@ export function EMIClient() {
               {t > 120 && (
                 <div style={{
                   padding: "9px 10px", fontSize: 11,
-                  color: "var(--color-text-secondary)",
-                  borderTop: "0.5px solid var(--color-border-tertiary)",
+                  color: "var(--text-muted)",
+                  borderTop: "0.5px solid var(--border)",
                 }}>
                   Showing first 120 of {t} months
                 </div>
